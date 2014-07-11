@@ -1,0 +1,84 @@
+\chapter{Introduction}
+\label{introduction}
+\noindent An important part of city planning involves estimating the amount of traffic a certain street or city district will support.
+Cars going to a certain destination will ultimately have to find a parking space. 
+This means that obtaining information on parking space usage could greatly contribute to improvement of urban spaces and regulate parking pricing.
+
+For instance, a study conducted between 1927 and 2001 \cite{cruising_for_parking_2007} in several cities around the world showed 
+that between 8 and 75\% of the traffic on the streets in the study areas were looking for parking.
+The average time spent cruising for a parking space in urban public parking areas varies from 3.5 to 12 minutes, 
+with distance traveled ranging from 1 km to over 1.5 km. 
+When multiplied by the number of cars looking for a parking space, this translates into a considerable amount traffic, wasted fuel, and unnecessary air pollution.
+
+A parking space monitoring system could help alleviate such problems. However, current vacant parking space systems are almost exclusively used in multi-story car parks.
+The reason behind it is that the typical sensor-based parking space detection system are costly and require a considerable amount of time and effort for installation.
+Intrusive sensors (e.g. pneumatic tubes, weight-in-motion sensors, piezoelectric cables) need to be embedded in floor and non-intrusive sensors are wired to 
+the ceiling or walls (e.g. ultrasonic sensors, CCTV-based detection).
+
+In this project we want to demonstrate a cost-effective alternative to such systems with a prototype using interconnected wireless sensors.
+By using Crossbow MicaZ motes, the sensors could be used in parking lots without roof, or even on the streets for curb parking slots.
+The statistics are then fed to a web server that could be accessed, for example, by the parking lot operator or by smart devices on cars.
+This means that such a system could provide benefits for both parties:
+
+%\begin{table*}[ht]
+%\centering
+%{\normalsize
+%\hfill{}
+%  \begin{tabular}{| c | c |}
+%    \hline
+%    Benefits for operators & Benefits for drivers \\ \hline
+%    \begin{itemize}%[noitemsep]
+%      \item Near-real-time parking lot occupancy information.
+%      \item More efficient and safer traffic flow.
+%      \item Parking usage trend analysis.
+%      \item Improved space utilization.
+%      \item Valuable statistics.
+%    \end{itemize} &
+%    \begin{itemize}%[noitemsep]
+%      \item Guided assistance in finding a free space.
+%      \item Reduced carbon dioxide emissions.
+%      \item Lower fuel consumption.
+%      \item Cruising time savings.
+%      \item Less frustration.
+%    \end{itemize} \\ \hline
+%  \end{tabular}}
+%\hfill{}
+%\caption{Examples of benefits for a cost-effective Vacant Parking Space Detector system.}
+%\label{tb:project_benefits}
+%\end{table*} 
+
+Benefits for operators:
+\begin{itemize}[noitemsep]
+  \item Near-real-time parking lot occupancy information.
+  \item More efficient and safer traffic flow.
+  \item Parking usage trend analysis.
+  \item Improved space utilization.
+  \item Valuable statistics.
+\end{itemize}
+
+Benefits for drivers:
+\begin{itemize}[noitemsep]
+  \item Guided assistance in finding a free space.
+  \item Reduced carbon dioxide emissions.
+  \item Lower fuel consumption.
+  \item Cruising time savings.
+  \item Less frustration.
+\end{itemize}
+
+\section{Requirements}
+
+\noindent Our proposed solution will feature the following: 
+\begin{itemize}[noitemsep]
+	\item Low power consumption – The system will focus on event-driven updates in order to conserve as much energy as possible and prolong time between sensor battery replacements.
+	\item Ease of installation – With a wireless sensor network approach, this system will avoid cabling installation. Also, dynamic routing makes it possible to install sensors in a plug-and-play fashion.
+	\item Reliability – The routing protocol focuses on reaching the control center keeping several alternate paths ready in case of connectivity loss.
+	\item Error detection – By keeping track of each device's power level on every message, sensors running low on battery can be quickly identified and get a replacement before losing connectivity.
+	\item Fast reaction times – The system is designed to notify of parking status changes before a car exits the parking lot. Average times should be around 5 to 20 seconds.
+\end{itemize}
+
+\bigskip
+
+\noindent \textsl{[...]"Some text in italics"}
+
+\bigskip
+

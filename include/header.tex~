@@ -1,0 +1,91 @@
+%\documentclass[a4paper,11pt,openany]{book}
+\documentclass[a4paper,
+	11pt,
+	BCOR5mm,
+	DIV12,
+	oneside,
+	chapterprefix,
+	pagesize,
+        numbers=noenddot,
+        cleardoublepage=plain,
+        openright,
+        bibliography=totoc,
+        bibliography=numbered,
+        index=totoc,
+        listof=totoc,
+        pagesize=pdftex,
+        listof=numbered]{scrreprt}
+        
+\usepackage{enumitem}	%For the [noitemsep] in enums and itemizes
+\usepackage[utf8]{inputenc}
+\usepackage[american]{babel}
+\usepackage{pdfsync}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage{units}
+%für das Einbinden von Bildern und Tabellen
+% \usepackage{here}
+\usepackage{psfrag}
+%für die Bibliography
+\usepackage[numbers,square]{natbib}
+\usepackage{hypernat}
+\usepackage{ifpdf}
+%Verwendung von Farben
+\usepackage{xcolor}
+%bedruckten Bereich der Seite anpassen
+\usepackage{a4wide}
+%\addtolength{\textheight}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+%für den Stil der Kapitel
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\huge\bf}{{\huge{\thechapter \, }}}{0em}{}
+%----------------------------------------------------------------------------------------------------------------------------------------------
+%Stil der Seite, mit Pos. der Seitenzahl, Kapitelname, etc.... kann man auch lassen----------------------
+%\usepackage{fancyhdr}
+%\rhead[\fancyplain{}{\normalfont\small\sffamily\nouppercase{\leftmark}}]{\fancyplain{}{\normalfont\small\sffamily\nouppercase{\leftmark}}}%[\fancyplain{}{\bfseries\thepage}]{} %{\fancyplain{}{\bfseries\rightmark}}
+%\chead[]{}%[\fancyplain{}{{\bfseries\leftmark}}]{\fancyplain{}{\bfseries\thepage}}
+%\lhead[]{}
+%\cfoot{\thepage}
+%\fancypagestyle{plain}{%
+%\fancyhf{} % clear all header and footer fields
+%\fancyfoot[C]{\thepage} % except the center
+%\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0pt}}
+\usepackage[automark,standardstyle,markusedcase]{scrpage2}
+\ihead{\headmark} \ohead{\pagemark} \cfoot{}
+%
+\pagestyle{empty}%für die Titelseiten zumindest, am Ende der Titelseite umschalten auf \pagestyle{fancyplain}
+\pagenumbering{roman}%für die Titelseiten zumindest, am Ende der Titelseite umschalten auf \pagenumbering{arabic}
+%d.h. explizit nach \tableofcontents:
+%\thispagestyle{empty}
+%\clearpage
+%\pagestyle{fancy}%um von leere auf nummerierte Seiten umzuschalten, dies ist evtl. auch schon vorher erwünscht
+%\pagenumbering{arabic}%um eine neue Zählung beginnend mit 1 zu beginnen
+%------------------------je nach Kommando (pdflatex / latex) jeweilige Paketeinbindung-----------------------------
+\definecolor{linkblue}{rgb}{0,0.1,0.6}
+\definecolor{citegreen}{rgb}{0,0.25,0.15}%{0.1,0.5,0.4}%{0.125,0.6,0.5}
+\definecolor{linkred}{rgb}{0.8,0,0.005}%{0.6,0,0.1}
+\definecolor{mailviolet}{rgb}{0.3,0,0.35}%{0.6,0,0.1}
+\definecolor{tumblue}{rgb}{0,0.396,0.741}
+\ifpdf %pdflatex
+    \usepackage[pdftex]{graphicx}
+    \pdfcompresslevel=0
+    \DeclareGraphicsExtensions{.jpg,.pdf,.png}%.mps}
+%    \usepackage[hyperindex,pdftex,colorlinks=false]{hyperref}
+%    \usepackage[hyperindex,pdfmark,pdftex,colorlinks=true,linkcolor=linkblue,citecolor=citegreen,urlcolor=linkred,filecolor=linkred]{hyperref}
+    \usepackage[hyperindex,pdftex,colorlinks=true,linkcolor=tumblue,citecolor=citegreen,urlcolor=mailviolet,filecolor=linkred]{hyperref}
+\else %latex && dvips
+    \usepackage[dvips]{graphicx}
+    \DeclareGraphicsExtensions{.eps,.ps}%.bmp,.tif,.tiff,.tga}
+    %\graphicspath{{figures/}}
+  \usepackage[hyperindex,pdfmark,dvips,colorlinks=true,linkcolor=tumblue,citecolor=citegreen,urlcolor=mailviolet,filecolor=linkred]{hyperref}
+\fi
+%für das drehen
+\usepackage{rotating}
+%Zeilenabstände regulieren mit \singlespacing, \onehalfspacing, \doublespacing
+\usepackage{setspace}
+%Schriftart Sans Serif
+\renewcommand*\familydefault{\sfdefault} 
+\selectlanguage{american}

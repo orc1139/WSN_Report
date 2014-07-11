@@ -1,0 +1,49 @@
+\input{include/header}%mit allen nötigen Stildefinitionen, Paketeinbindungen, etc. - FIX
+%--------------------------------- FRONT PAGE --------------------------------
+\newcommand{\DAtype}{WSN Final Report}
+\newcommand{\DAthema}{Final Report - Vacant Parking Space Detector}
+\newcommand{\DAgroup}{04}
+\newcommand{\DAsemester}{SoSe 2014}
+\newcommand{\DAautorOne}{Octavio Rodr\'iguez}
+\newcommand{\DAautorTwo}{Jure Zdovc}
+\newcommand{\DAprofessor}{Prof. Dr.-Ing. Wolfgang Kellerer} %1. und offizieller 
+\newcommand{\DAbetreuer}{M.Sc. Arsany Basta} %2. und i.d.R. inoffizieller Betreuer
+%\newcommand{\DAbetreuer}{ M.Sc. Thomas Szyrkowiec} %2. und i.d.R. inoffizieller Betreuer
+\newcommand{\DAausgabe}{\today}
+\newcommand{\AdresseLehrstuhl}{Fachgebiet Verteilte Multimodale Informationsverarbeitung\\
+Fakultät für Elektrotechnik und Informationstechnik\\
+Technische Universität München\\
+Arcisstraße 21\\
+80333 München}
+
+%--------------------------------------------------------------------------------------------
+\begin{document}
+\input{include/frontpage} % FIX, titelseite.tex braucht i.d.R. nicht modifiziert zu werden!
+\tableofcontents %Inhaltsverzeichnix
+
+%--------------------------- REPORT CONTENTS --------------------------- 
+\clearpage
+\pagestyle{scrheadings}
+\pagenumbering{arabic}
+\input{content/01_Introduction}	% Motivation,  typical solutions, summary of our idea.
+\input{content/02_Description}	% Requirements, topology, routing.
+\input{content/03_Details}	% Sensor used, state diagrams, packet formatting, algorithms.
+\input{content/04_Conclusion}	% Test results, summary of all.
+
+%------------ Appendix ---------------
+\clearpage
+\appendix
+%\input{Anhang} %nur ein Beispiel
+
+%------------ List of figures ---------------
+\clearpage
+\listoffigures %Abbildungsverzeichnis
+
+%------------- Bibliography --------------
+%entweder(bei vorhandenen bib-files)
+\nocite{*}
+\bibliographystyle{unsrt}%{elsart-num}%{unsrt}{elsart-harv}
+\bibliography{literature}%bei mehreren bib-files: \bibliography{bibfile1,bibfile2}
+
+%-------------------------------------------------------------------------
+\end{document}

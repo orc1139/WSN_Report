@@ -1,0 +1,17 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Project Description}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Requirements}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Topology}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Routing}{chapter.2}% 5
+\BOOKMARK [2][-]{subsection.2.3.1}{Rumor Routing}{section.2.3}% 6
+\BOOKMARK [2][-]{subsection.2.3.2}{Dijkstra's algorithm for best path selection}{section.2.3}% 7
+\BOOKMARK [0][-]{chapter.3}{Implementation Details}{}% 8
+\BOOKMARK [1][-]{subsection.3.0.3}{Network Discovery}{chapter.3}% 9
+\BOOKMARK [2][-]{subsection.3.0.4}{Parking Status Propagation}{subsection.3.0.3}% 10
+\BOOKMARK [2][-]{subsection.3.0.5}{Packet Format}{subsection.3.0.3}% 11
+\BOOKMARK [2][-]{subsection.3.0.6}{Hardware used}{subsection.3.0.3}% 12
+\BOOKMARK [2][-]{subsection.3.0.7}{Graphical User Interface}{subsection.3.0.3}% 13
+\BOOKMARK [0][-]{chapter.4}{Test results}{}% 14
+\BOOKMARK [0][-]{chapter.5}{Summary}{}% 15
+\BOOKMARK [0][-]{appendix.A}{List of Figures}{}% 16
+\BOOKMARK [0][-]{appendix.B}{Bibliography}{}% 17

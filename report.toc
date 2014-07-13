@@ -6,14 +6,13 @@
 \contentsline {section}{\numberline {2.2}Topology}{2}{section.2.2}
 \contentsline {section}{\numberline {2.3}Routing}{3}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Rumor Routing}{3}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Dijkstra's algorithm for best path selection}{4}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.2}Dijkstra's algorithm for best path selection}{5}{subsection.2.3.2}
 \contentsline {subsection}{\numberline {2.3.3}The rumor-Dijkstra hybrid}{5}{subsection.2.3.3}
 \contentsline {chapter}{\numberline {3}Implementation Details}{7}{chapter.3}
 \contentsline {subsection}{\numberline {3.0.4}Network Discovery}{7}{subsection.3.0.4}
 \contentsline {subsection}{\numberline {3.0.5}Parking Status Propagation}{7}{subsection.3.0.5}
-\contentsline {subsection}{\numberline {3.0.6}Packet Format}{7}{subsection.3.0.6}
-\contentsline {subsection}{\numberline {3.0.7}Hardware used}{7}{subsection.3.0.7}
-\contentsline {subsection}{\numberline {3.0.8}Graphical User Interface}{7}{subsection.3.0.8}
-\contentsline {chapter}{\numberline {4}Summary}{11}{chapter.4}
-\contentsline {chapter}{\numberline {A}List of Figures}{12}{appendix.A}
-\contentsline {chapter}{\numberline {B}Bibliography}{13}{appendix.B}
+\contentsline {subsection}{\numberline {3.0.6}Packet Format}{10}{subsection.3.0.6}
+\contentsline {subsection}{\numberline {3.0.7}Graphical User Interface}{11}{subsection.3.0.7}
+\contentsline {chapter}{\numberline {4}Summary}{13}{chapter.4}
+\contentsline {chapter}{\numberline {A}List of Figures}{14}{appendix.A}
+\contentsline {chapter}{\numberline {B}Bibliography}{15}{appendix.B}

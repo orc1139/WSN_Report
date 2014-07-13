@@ -15,12 +15,24 @@
         listof=totoc,
         pagesize=pdftex,
         listof=numbered]{scrreprt}
-        
+
+
+% NOTE: if you get an error such as "! Missing $ inserted" it means a character that can only
+% be used in the mathematics was inserted in normal text. 
+% If you did not intend to use mathematics mode, then perhaps you are trying to use a special 
+% character that needs to be entered in a different way.
+% This can also happen if you use the wrong character encoding.
+% There are several character encoding formats, make sure to pick the right one:
+% 		See http://en.wikibooks.org/wiki/LaTeX/Special_Characters#Input_encoding
+% Here are some examples. Please use only ONE:
+%\usepackage[latin1]{inputenc}	% Old Unix environment.
+%\usepackage[ansinew]{inputenc}	% Windows environment.
+\usepackage[utf8]{inputenc}	% Modern Unix environment.
+
 \usepackage{enumitem}	% For the [noitemsep] in enums and itemizes
 \usepackage{sidecap}	% Needed to place a caption beside a figure or table.
 \usepackage{tabu}		% Needed to allow tables.
 
-\usepackage[utf8]{inputenc}
 \usepackage[american]{babel}
 \usepackage{pdfsync}
 \usepackage{amsmath}

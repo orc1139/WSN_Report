@@ -11,6 +11,8 @@ For every new file created under this folder, you have to create a new "\input" 
 
 5.- Compilation is done on "report.tex" file (there is a Makefile included).
 
+6.- All \usepackage lines are found in "include/header.tex"
+
 
 NOTE: Two addtional scripts ars included to compile the LaTeX file and the bibliography properly. 
 (I did not like the Makefile, and it is useless under Windows.)
@@ -20,3 +22,5 @@ Script 1 - Used under Windows: compiletex.bat <file_name_no_extension>.
 
 Script 2 - Used under Linux: ./compile_tex_linux.sh <file_name_no_extension>
 	Used in the exact same way as compiletex.bat.
+
+Make sure you don't have the .pdf opened while you compile the .tex file.

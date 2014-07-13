@@ -3,8 +3,13 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Example topology of a small parking lot}}{3}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces System setup and vacant space detection}}{4}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Best path discovery example}}{6}{figure.2.3}
 \addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Network discovery process for the three roles.}}{8}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Flowchart of the functions of a sensor.}}{9}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Flowchart of the functions of a gateway.}}{10}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Packet format}}{10}{figure.3.4}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

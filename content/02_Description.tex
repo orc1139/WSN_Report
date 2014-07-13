@@ -2,35 +2,48 @@
 \label{project_description}
 
 \section{Requirements}
-\noindent Our proposed solution will feature the following: 
+\noindent In order fulfil the basic needs of any parking detection system, our proposed solution will feature the following: 
 \begin{itemize}[noitemsep]
 	\item Low power consumption – The system will focus on event-driven updates in order to conserve as much energy as possible and prolong time between sensor battery replacements.
 	\item Ease of installation – With a wireless sensor network approach, this system will avoid cabling installation. Also, dynamic routing makes it possible to install sensors in a plug-and-play fashion.
 	\item Reliability – The routing protocol focuses on reaching the control center keeping several alternate paths ready in case of connectivity loss.
 	\item Error detection – By keeping track of each device's power level on every message, sensors running low on battery can be quickly identified and get a replacement before losing connectivity.
-	\item Fast reaction times – The system is designed to notify of parking status changes within 5 to 10 seconds.
+	\item Fast reaction times – The system will to notify parking status changes on time for the next car looking for a parking spot.
 \end{itemize}
 
 \section{Topology}
 The two scenarios where this solution could be applied would be mainly in parking lots, and multi-story car parks, but also curb parking spaces.
-In order to communicate the status of the parking spaces, Crossbow MicaZ motes are programmed with one of three roles (see figure \ref{fig:topology}):
+In order to communicate the status of the parking spaces, wireless motes are programmed with one of three roles (see figure \ref{fig:topology}):
 \begin{enumerate}
-	\item Sensor - Mote running on two AA batteries equipped with a light sensor and encased in a protective shell that is fixed to the floor or pavement.
+	\item Sensor - Mote running on batteries equipped with a light sensor and encased in a protective shell that is fixed to the floor or pavement.
 	It is responsible for monitoring parking space occupancy and inform its immediate gateway of a status change.
 	\item Gateway - Mote connected to a power source in an elevated position (e.g. a street lamp). 
 	It provides network access to the sensors by forwarding their status messages towards the control center. 
 	It also builds a distance-based routing table that consists of neighbor gateway addresses and their distance to the control center.
-	\item Control Center (CC) - Mote connected to a computer or web server. This device will receive and process all status messages from every gateway. 
+	\item Central Station (CS) - Mote connected to a computer or web server. This device will receive and process all status messages from every gateway. 
 	It also provides statistical information and GUI for the parking lot operator and information to be printed in an outdoor display for the drivers.
 \end{enumerate}
+The complete space detection and status forwarding is illustrated in figure \ref{fig:system_setup}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=15cm]{images/Topology_General.png}
+    \includegraphics[width=15cm]{images/General_ParkingLotTopology.png}
 	\vspace{-1.5em}
     \caption{Example topology of a small parking lot}
     \vspace{-1.5em}
     \label{fig:topology}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=15cm]{images/General_SpaceDetectionAndGUI.png}
+	\vspace{-1.5em}
+    \caption[System setup and vacant space detection]{System setup: Sensor motes are fixed onto the ground and detect if a car is using the parking space. 
+	If the parking status changes, the sensor notifies its gateway. 
+	The gateway injects the notification into the network where it reaches the central station. 
+	The central station publishes the information via an Admin GUI or a public display on the street.}
+    \vspace{-1.5em}
+    \label{fig:system_setup}
 \end{figure}
 
 \section{Routing}
@@ -42,50 +55,82 @@ We decided a protocol mix of Dijkstra and rumor routing could meet all these req
 
 \bigskip
 \subsection{Rumor Routing}
-Each node has its neighbor list, and an events table, with forwarding information to all the events it knows. 
+In the original concept of query-based rumour routing \cite{rumor_routing_2002}, each node has a neighbor list and an events table. The events table contains forwarding information to all the events it knows. 
 After a node witnesses an event, it sends a special long-lived packet to the network known as an agent.
-The agent travels around the network hopping from node to node creating a path towards the event.
-Each agent contains an events table, including the routing information for all events it knows.
-Since an event happens in a zone, composed of several or many nodes, it’s possible more than one agents are created from the zone and moving in the network.
- An agent's routing table will be updated if there’s a shorter path to an event within the routing table of the node it is visiting. 
-Also, the routing table of the currently visited node will be updated if its route to an event is more costly than the agent’s. 
+The agent travels around the network hopping from node to node creating a path originating from the event.
 
-Once there are events, agents and paths on the network, any node may query for a particular event. 
-If it knows the route to the event, it will transmit the query. 
+Once there are events, agents and paths on the network, any node may send a query packet for a particular event into the network. 
+If the query packet reaches a node who knows the route to the event (as told by a passing agent), it will forward the query. 
 Otherwise, the query will be sent and propagated in a random direction until the query reaches a node with a route to the event. 
 
 Properties
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item Power saving, improves network longevity.
 	\item Robust in dealing node failure.
-	\item Tunable, allow tradeoff between setup overhead and delivery reliability.
+	\item Tunable, allow trade-off between setup overhead and delivery reliability.
 \end{itemize}
  Assumptions
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item No coordinate system is available so location information is not known by nodes.
 	\item Static topology.
 \end{itemize}
 
 \subsection{Dijkstra's algorithm for best path selection}
+This algorithm seeks the best path from a source node to a destination node in a given network.
+It starts by assigning a tentative distance value to every node: set to zero for the initial node and to infinity for all other nodes.
+Marks all nodes unvisited. Sets the initial node as current. Creates a set of the unvisited nodes called the unvisited set consisting of all the nodes.
 
-Disadvantages
-\begin{itemize}
+Once all these initial settings are done, an iterative process begins in which each node is evaluated for the shortest distance:
+\begin{enumerate}[noitemsep]
+	\item For the current node, all of its unvisited neighbors are evaluated and their tentative distances are calculated.
+	\item It then compares the newly calculated tentative distance to the current assigned value and assign the smaller one. 
+	\item When all of neighbors of the current node has been evaluated, the current node is marked as visited and removed from the unvisited set. 
+	\item If the destination node has been marked visited or if the smallest tentative distance among the nodes in the unvisited set is infinity, the algorithm stops.
+	\item The next step is to take the unvisited node with the smallest tentative distance as the new "current node" and go back to the first step.
+\end{enumerate}
+
+Properties
+\begin{itemize}[noitemsep]
+	\item Clever way to use cost/distance to select a path.
+	\item Focused in looking for one path only (i.e. the algorithm must be run on every device).
 	\item Looking for the shortest path by flooding consumes a lot of energy.
 	\item Flooding increases the chance of collision.
-	\item This application only requests a small amount of data back (ACK).
 \end{itemize}
 
-How have we combined them.
-\bigskip
+\subsection{The rumor-Dijkstra hybrid}
+As we have seen, rumor routing and Dijkstra's algorithm have attractive properties that could provide advantageous to our purposes. 
+In order to provide a practical, simple and fast solution we had to mix the most convenient features to our topology :
 
-The first device in the network should be the control center. 
-Afterwards, the gateways can be installed and turned on.
-Upon booting, the gateways will start exchanging routing information and converge once a wireless path towards the CC is found.
-If at least one gateway is online, sensors can be installed. 
-These will attempt to discover any gateway within range and create an ordered list of gateways based signal strength.
-When a parking status event triggers a message, the sensor will attempt to send it to the nearest gateway for forwarding. 
-If this gateway fails to process the packet, the sensor is notified and will then repeat the process with the next gateway on its list.
+\begin{itemize}[noitemsep]
+	\item After booting, a new node will send an UPDATE broadcast announcing its MAC address and its distance to the central station (255, the equivalent to infinity).
+	\item Every gateway that receives an UPDATE and is currently available, must reply with an ACK, its MAC address and its distance to the central station.
+	\item The new node will wait five seconds to receive all acknowledgements. After that, the device reads each ACK and selects the five best metrics. 
+	\item In the case of sensors, the metric is signal strength (the higher, the better) and for gateways is distance to the central station (the lower, the better).
+	\item After a gateway reads the distance of an ACK, it also checks the signal strength of the packet and adds a weight depending on the RSSI value (+1 if \(>\) 0 , +2 if \(>\) -15, +3 if \(\leq\) -15). 
+	\item The replies with the five best metrics are put in the routing table. In the case of gateways, the best distance (+ RSSI weight) in the table becomes its own distance.
+	the device can begin with the tasks specific to its role (gateway or sensor).
+	\item If there was no response at all, the device will repeat the process over and over again sending UPDATE packets until it receives an ACK.
+\end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=15cm]{images/Example_Routing.png}
+	\vspace{-1.5em}
+    \caption[Best path discovery example]{Example of best path discovery. 
+	The number in the lines connecting the nodes are the weights taken from the RSSI values of each link (1 if \(>\) 0 , 2 if \(>\) -15, 3 if \(\leq\) -15).
+	The blue circles represent gateways and the red square is the central station (CS).
+	Each node keeps a table with five of its neighbors with the shortest distance to the CS.
+	The red number is the distance each node reports in UPDATE packets.}
+    \vspace{-1.5em}
+    \label{fig:routing}
+\end{figure}
+
+In contrast to the original rumor routing concept, the hybrid does not consider events as information source or an agent traversing the network. 
+Instead, it makes emphasis on routing by exchanging information with neighbors only. Their only interest is about their distance to the central station (or signal strength).
+
+Also, instead of running a Dijkstra algorithm to check every single node for their link cost and update it after every calculation, we took the concept of cost and a step-wise evaluation of the best path to a specific node. This process happens locally on every node and this information will be exchanged with neighbors only. 
+
+Queries are sent only on the network discovery stage, right after the device booted up. Alternatively, UPDATE packets are triggered if a device had to delete all of the entries in its routing table and in the case the best distance in a gateway's table changes (and its distance with that). This way the gateway informs its neighbors and each of them updates its own table.
 
 %\bigskip
 %\noindent \textsl{[...]"Some text in italics"}

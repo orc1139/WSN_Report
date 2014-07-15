@@ -11,8 +11,8 @@ The process is basically the same for all three roles with a few minor differenc
 	\item A GW\_REQ is broadcasted with the device's MAC address.
 		Every Gateway or CS who receives a GW\_REQ, replies with an UPDATE packet. 
 		The UPDATE contains the replying Gateway's MAC address and its distance to the CS.
-	\item The device will wait for five seconds to accumulate as many replies as possible.
-	\item If there were no replies, the process gores back to step 2. 
+	\item The device will wait all the repies that reach it.
+	\item If there were no replies, the process goes back to step 2. 
 		Otherwise, each response received is read and evaluated.
 	\item The responses with the five best metrics are put in the routing table.
 		Gateway metric is reported distance to the CS + weighted RSSI.
@@ -36,9 +36,9 @@ The process is basically the same for all three roles with a few minor differenc
 \label{sec:parking_status_propagation}
 After a Sensor has built a routing table, it maintains communications with only the Gateway with the best metric.
 From this point, the Sensor will spend as little battery as possible.
-It does this by staying putting the wireless communications module in sleep mode.
-The light sensor (or infra-red, or any other type that best suits the environment) will probe its surroundings periodically to detect any changes.
-As soon as the light sensor detects a change, it will send an interruption signal to the wireless module to wake up.
+It can do this this by putting the wireless communications module in sleep mode.
+The light sensor (or any other type that best suits the environment) will probe its surroundings periodically to detect any changes.
+As soon as the light sensor detects a change, it will send an interruption signal to generate and send the status message.
 Then, the process described in figure \ref{fig:sensor} takes place:
 \begin{enumerate}[noitemsep]
 	\item The Sensor looks in its routing table for the first element (best metric).
@@ -48,9 +48,9 @@ Then, the process described in figure \ref{fig:sensor} takes place:
 		This packet contains the Sensor's MAC address and is destined to address extracted from the table.
 	\item The message is sent to its destination and the Sensor waits 300 ms for an acknowledge packet (ACK).
 	\item If an ACK is received, the Sensor goes back to sleep mode.
-	\item if a NACK is received, the Sensor goes back to step 1, but uses the next gateway in the list on step 2.
+	\item if a NACK is received, the Sensor goes back to step 1 without removing the element from the routing table, but uses the next gateway in the list on step 2.
 	\item If the ACK timed out, it tries two more times with the same address.
-	\item If there was no response, the address to which it tried is removed from the routing table and goes back to step 1.
+	\item If there was no response (ACK or NACK), the address to which it tried is removed from the routing table and goes back to step 1.
 \end{enumerate}
 
 \begin{figure}
@@ -64,7 +64,7 @@ Then, the process described in figure \ref{fig:sensor} takes place:
 
 In the case of a Gateway, the process is very similar. 
 The main difference is that a Gateway waits for messages, for its task is to forward them.
-It does not go into sleep mode, because it is connected to a light post and has an "unlimited" source of electricity.
+It does not go into sleep mode, because it is connected to an "unlimited" source of electricity.
 But also, a Gateway sends ACKs if it receives a status message and is currently not busy.
 Otherwise, it will send a NACK. The complete process is described in figure \ref{fig:gateway}.
 
@@ -87,7 +87,7 @@ In the previous sections all five packet types were mentioned in context, but a 
 	\item UPDATE: Used by Gateways and the CS to notify neighboring devices of its address and distance to CS.
 	\item OCCUPIED: Sent by Sensors to notify a parking space is now occupied.
 	\item EMPTY: Sent by Sensors to notify a parking space is now free.
-	\item GW\_REQ: Sent by Sensors and Gateways in the network discovery phase to establish communications with neighboring gateways and create a routing table.
+	\item GW\_REQ: Sent by Sensors and Gateways in the network discovery phase to establish communications with neighboring gateways and request the information about distance to the CS.
 \end{itemize}
 
 \begin{figure}

@@ -17,12 +17,12 @@
 The two scenarios where this solution could be applied would be mainly in parking lots, and multi-story car parks, but also curb parking spaces.
 In order to communicate the status of the parking spaces, wireless motes are programmed with one of three roles (see figure \ref{fig:topology}):
 \begin{enumerate}
-	\item Sensor - Mote running on batteries equipped with a light sensor and encased in a protective shell that is fixed to the floor or pavement.
+	\item Sensor - Node running on batteries equipped with a light sensor and encased in a protective shell that is fixed to the floor or pavement.
 	It is responsible for monitoring parking space occupancy and inform its immediate Gateway of a status change.
-	\item Gateway - Mote connected to a power source in an elevated position (e.g. a street lamp). 
+	\item Gateway - Node connected to a power source in an elevated position (e.g. a street lamp). 
 	It provides network access to the Sensors by forwarding their status messages towards the control center. 
 	It also builds a distance-based routing table that consists of neighbor Gateway addresses and their distance to the control center.
-	\item Central Station (CS) - Mote connected to a computer or web server. This device will receive and process all status messages from every Gateway. 
+	\item Central Station (CS) - Node connected to a computer or web server. This device will receive and process all status messages from every Gateway. 
 	It also provides statistical information and GUI for the parking lot operator and information to be printed in an outdoor display for the drivers.
 \end{enumerate}
 The complete space detection and status forwarding is illustrated in figure \ref{fig:system_setup}.
@@ -109,14 +109,14 @@ As we have seen, rumor routing and Dijkstra's algorithm have attractive properti
 In order to provide a practical, simple and fast solution we had to mix the most convenient features to our topology :
 
 \begin{itemize}[noitemsep]
-	\item After booting, a new node will broadcast a special packet called GW\_REQ (meaning "Gateway request". See section \ref{sec:packet_format} for more details on packet types) announcing its MAC address and its initial distance to the central station (255, the equivalent to infinity).
-	\item Every Gateway that receives a GW\_REQ and is currently available, must reply with another special packet, an UPDATE, which contains its MAC address and its distance to the CS.
-	\item The new node will wait five seconds to receive as many UPDATE packets as possible. After that, the device reads each reply and selects the five best metrics. 
+	\item After booting, a new node will broadcast a special packet called GW\_REQ (meaning "Gateway request". See section \ref{sec:packet_format} for more details on packet types)
+	\item Every Gateway that receives a GW\_REQ, must reply with an UPDATE packet, which contains its MAC address and its distance to the CS.
+	\item The new node then waits for all UPDATE packets. From all replies, 5 best neighboru nodes are selected and inserted into the routng table.
 	\item In the case of Sensors, the metric is the Received Signal Strength Indicator (RSSI; the higher, the better) and for Gateways is distance to the central station (the lower, the better).
 	\item After a Gateway reads the distance of an UPDATE, it also checks the signal strength of the packet and adds a weight depending on the RSSI value:\\
 			\centerline{+1 if \(>\) 0 , +2 if \(>\) -15, +3 if \(\leq\) -15}. 
-	\item The replies with the five best metrics are put in the routing table. In the case of Gateways, the best distance (+ RSSI weight) in the table becomes its own distance.
-	the device can begin with the tasks specific to its role (Gateway or Sensor).
+	\item The replies with the five best metrics are put in the routing table. In the case of Gateways, the best distance (+ RSSI weight) in the table becomes its own distance. If own distance is changed, that means that there was a change in topology so the node must broadcast the UPDATE message to notify other nodes in the vicinity. This ensures that every significant change of topology instantly spreads through the network. 
+	The device can then begin with the tasks specific to its role (Gateway or Sensor).
 	\item If there was no response at all, the device will repeat the process over and over again sending GW\_REQ packets until it receives an UPDATE.
 \end{itemize}
 
@@ -140,5 +140,5 @@ Their only interest is about their distance to the central station and/or signal
 Also, instead of running a Dijkstra algorithm to check every single node for their link cost and update it after every calculation, we took the concept of cost and a step-wise evaluation of the best path to a specific node. 
 This process happens locally on every node and this information will be exchanged with neighbors only. 
 
-UPDATE packets (equivalent to queries) are sent in three situations: during network discovery (see section \ref{sec:network_discovery} for more on the network discovery), if a device had to delete its routing table, or if its best route changed. 
-This way routing changes are propagated from Gateway to Gateway.
+UPDATE packets are sent in two situations: As a response on GW_REQ packet during network discovery (see section \ref{sec:network_discovery} for more on the network discovery), or if its best route changed.
+If best route is changed, that means that the information about distance to the CS that neighbouring nodes have through this node are not up to date anymore. Because of this, the node sens an UPDATE packet to its neighbours, reporting that the path is better or worse. If this also has an effect on the best route of the next node, the same procedure happens on the next node. If a change has no effect on a next nodes own distance, the next node stays silent because from here all the data is up to date. In this way the information spreads as far as it has an effect and entire network stays up to date with as little overhead as possible.
